@@ -18,11 +18,12 @@
   },
   "homepage": "https://github.com/Antoxa72009/nodejs-hw-mongodb#readme",
   "description": "",
-  "type":"module",
+  "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "mongodb": "^6.19.0",
     "mongoose": "^8.18.0",
     "pino": "^9.9.1",
     "pino-http": "^10.5.0"

@@ -4,7 +4,7 @@ dotenv.config();
 import { initMongoConnection } from "./db/initMongoConnection.js";
 import express from "express";
 import cors from "cors";
-import { contactsRouter } from "./routes/contacts.js";
+import contactsRouter from "./routers/contacts.js";
 import { notFoundHandler, errorHandler } from "./middlewares/errorHandler.js";
 
 const bootstrap = async () => {

@@ -9,11 +9,21 @@ import {
 
 export const getContactsController = async (req, res, next) => {
   try {
-    const contacts = await getAllContacts();
+    const { page = 1, perPage = 10, sortBy = "name", sortOrder = "asc", type, isFavourite } = req.query;
+
+    const result = await getAllContacts({
+      page: Number(page),
+      perPage: Number(perPage),
+      sortBy,
+      sortOrder,
+      type,
+      isFavourite,
+    });
+
     res.json({
       status: 200,
       message: "Successfully found contacts!",
-      data: contacts,
+      data: result,
     });
   } catch (err) {
     next(err);

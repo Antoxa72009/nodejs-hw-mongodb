@@ -78,7 +78,7 @@ export const logoutController = async (req, res, next) => {
 
 export const getProfileController = async (req, res, next) => {
   try {
-    const user = req.user; // отримуємо з middleware
+    const user = req.user;
     if (!user) throw createHttpError(404, "User not found");
 
     res.json({

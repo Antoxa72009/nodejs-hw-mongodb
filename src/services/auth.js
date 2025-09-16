@@ -4,8 +4,8 @@ import { User } from "../models/user.js";
 import { Session } from "../models/session.js";
 import { signAccessToken, signRefreshToken } from "../utils/token.js";
 
-const ACCESS_TTL_MS = 15 * 60 * 1000;
-const REFRESH_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+const ACCESS_TTL_MS = 15 * 60 * 1000; 
+const REFRESH_TTL_MS = 30 * 24 * 60 * 60 * 1000; 
 
 export const registerUser = async ({ name, email, password }) => {
   const existing = await User.findOne({ email });
@@ -25,13 +25,14 @@ export const loginUser = async ({ email, password }) => {
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) throw createHttpError(401, "Invalid credentials");
 
+  // очищаємо попередні сесії
   await Session.deleteMany({ userId: user._id });
 
   const accessToken = signAccessToken({ _id: user._id, email: user.email });
   const refreshToken = signRefreshToken({ _id: user._id, email: user.email });
 
   const now = Date.now();
-  const session = await Session.create({
+  await Session.create({
     userId: user._id,
     accessToken,
     refreshToken,
@@ -42,17 +43,14 @@ export const loginUser = async ({ email, password }) => {
   return {
     accessToken,
     refreshToken,
-    sessionId: session._id,
-    accessTokenValidUntil: session.accessTokenValidUntil,
-    refreshTokenValidUntil: session.refreshTokenValidUntil,
     user: { _id: user._id, name: user.name, email: user.email },
   };
 };
 
-export const refreshSession = async (currentRefreshToken) => {  
+export const refreshSession = async (currentRefreshToken) => {
   const oldSession = await Session.findOne({ refreshToken: currentRefreshToken });
   if (!oldSession) throw createHttpError(401, "Invalid session");
-  
+
   await Session.deleteOne({ _id: oldSession._id });
 
   const payload = { _id: oldSession.userId.toString() };
@@ -60,7 +58,7 @@ export const refreshSession = async (currentRefreshToken) => {
   const refreshToken = signRefreshToken(payload);
   const now = Date.now();
 
-  const newSession = await Session.create({
+  await Session.create({
     userId: oldSession.userId,
     accessToken,
     refreshToken,
@@ -71,15 +69,13 @@ export const refreshSession = async (currentRefreshToken) => {
   return {
     accessToken,
     refreshToken,
-    sessionId: newSession._id,
-    accessTokenValidUntil: newSession.accessTokenValidUntil,
-    refreshTokenValidUntil: newSession.refreshTokenValidUntil,
   };
 };
 
-export const logoutSession = async (sessionId, refreshTokenFromCookie) => {
-  const session = await Session.findOne({ _id: sessionId, refreshToken: refreshTokenFromCookie });
+export const logoutSession = async (refreshToken) => {
+  const session = await Session.findOne({ refreshToken });
   if (!session) throw createHttpError(401, "Invalid session");
+
   await Session.deleteOne({ _id: session._id });
   return true;
 };

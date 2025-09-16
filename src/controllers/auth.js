@@ -8,7 +8,7 @@ export const registerController = async (req, res, next) => {
     res.status(201).json({
       status: 201,
       message: "Successfully registered a user!",
-      data: user, 
+      data: user,
     });
   } catch (err) {
     next(err);
@@ -24,13 +24,13 @@ export const loginController = async (req, res, next) => {
       httpOnly: true,
       sameSite: "Strict",
       secure: process.env.NODE_ENV === "production",
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 днів
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.json({
       status: 200,
       message: "Successfully logged in an user!",
-      data: { accessToken: result.accessToken, sessionId: result.sessionId },
+      data: { accessToken: result.accessToken },
     });
   } catch (err) {
     next(err);
@@ -70,7 +70,7 @@ export const logoutController = async (req, res, next) => {
 
     res.clearCookie("refreshToken", { httpOnly: true, sameSite: "Strict" });
 
-    res.status(204).send(); 
+    res.status(204).send();
   } catch (err) {
     next(err);
   }

@@ -75,3 +75,18 @@ export const logoutController = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getProfileController = async (req, res, next) => {
+  try {
+    const user = req.user; // отримуємо з middleware
+    if (!user) throw createHttpError(404, "User not found");
+
+    res.json({
+      status: 200,
+      message: "User profile fetched successfully",
+      data: user,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

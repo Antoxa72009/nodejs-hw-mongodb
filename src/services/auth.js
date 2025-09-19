@@ -25,7 +25,6 @@ export const loginUser = async ({ email, password }) => {
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) throw createHttpError(401, "Invalid credentials");
 
-  // очищаємо попередні сесії
   await Session.deleteMany({ userId: user._id });
 
   const accessToken = signAccessToken({ _id: user._id, email: user.email });
@@ -78,4 +77,8 @@ export const logoutSession = async (refreshToken) => {
 
   await Session.deleteOne({ _id: session._id });
   return true;
+};
+
+export const findUserByEmail = async (email) => {
+    return await User.findOne({ email });
 };

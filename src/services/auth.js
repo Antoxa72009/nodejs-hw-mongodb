@@ -82,3 +82,13 @@ export const logoutSession = async (refreshToken) => {
 export const findUserByEmail = async (email) => {
     return await User.findOne({ email });
 };
+
+export const updateUserPassword = async (email, newPassword) => {
+  const user = await User.findOne({ email });
+  if (!user) throw createHttpError(404, "User not found!");
+
+  const hashed = await bcrypt.hash(newPassword, 10);
+  user.password = hashed;
+  await user.save();
+  return user;
+};

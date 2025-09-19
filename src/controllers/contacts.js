@@ -7,7 +7,7 @@ import {
   deleteContact,
 } from "../services/contacts.js";
 
-import { uploadBufferToCloudinary } from "../lib/cloudinaryUpload.js"; 
+import { uploadBufferToCloudinary } from '../lib/uploadBufferToCloudinary.js';
 
 export const getContactsController = async (req, res, next) => {
   try {

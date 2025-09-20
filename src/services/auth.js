@@ -4,8 +4,8 @@ import { User } from "../models/user.js";
 import { Session } from "../models/session.js";
 import { signAccessToken, signRefreshToken } from "../utils/token.js";
 
-const ACCESS_TTL_MS = 15 * 60 * 1000; 
-const REFRESH_TTL_MS = 30 * 24 * 60 * 60 * 1000; 
+const ACCESS_TTL_MS = 15 * 60 * 1000;
+const REFRESH_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 export const registerUser = async ({ name, email, password }) => {
   const existing = await User.findOne({ email });
@@ -80,7 +80,7 @@ export const logoutSession = async (refreshToken) => {
 };
 
 export const findUserByEmail = async (email) => {
-    return await User.findOne({ email });
+  return await User.findOne({ email });
 };
 
 export const updateUserPassword = async (email, newPassword) => {

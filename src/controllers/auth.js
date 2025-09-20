@@ -1,8 +1,8 @@
 import createHttpError from "http-errors";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import bcrypt from "bcryptjs";
 import { registerUser, loginUser, refreshSession, logoutSession, findUserByEmail, updateUserPassword } from "../services/auth.js";
+import { deleteUserSessionsForUser } from "../services/session.js";
 
 export const registerController = async (req, res, next) => {
   try {
@@ -148,11 +148,9 @@ export const resetPasswordController = async (req, res, next) => {
     const user = await findUserByEmail(payload.email);
     if (!user) throw createHttpError(404, "User not found!");
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    await updateUserPassword(user.email, password);
 
-    await updateUserPassword(user._id, hashedPassword);
-
-    await logoutSession(user._id); 
+    await deleteUserSessionsForUser(user._id); 
 
     res.status(200).json({
       status: 200,

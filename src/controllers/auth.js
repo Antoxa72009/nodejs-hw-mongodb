@@ -1,7 +1,14 @@
 import createHttpError from "http-errors";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { registerUser, loginUser, refreshSession, logoutSession, findUserByEmail, updateUserPassword } from "../services/auth.js";
+import {
+  registerUser,
+  loginUser,
+  refreshSession,
+  logoutSession,
+  findUserByEmail,
+  updateUserPassword,
+} from "../services/auth.js";
 import { deleteUserSessionsForUser } from "../services/session.js";
 
 export const registerController = async (req, res, next) => {
@@ -100,12 +107,16 @@ export const sendResetEmailController = async (req, res, next) => {
     const user = await findUserByEmail(email);
     if (!user) throw createHttpError(404, "User not found!");
 
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5m" });
+    const token = jwt.sign(
+      { email: user.email },
+      process.env.JWT_RESET_SECRET,
+      { expiresIn: "5m" }
+    );
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
-      secure: false, 
+      secure: false,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
@@ -140,7 +151,7 @@ export const resetPasswordController = async (req, res, next) => {
 
     let payload;
     try {
-      payload = jwt.verify(token, process.env.JWT_SECRET);
+      payload = jwt.verify(token, process.env.JWT_RESET_SECRET);
     } catch {
       throw createHttpError(401, "Token is expired or invalid.");
     }
@@ -150,7 +161,7 @@ export const resetPasswordController = async (req, res, next) => {
 
     await updateUserPassword(user.email, password);
 
-    await deleteUserSessionsForUser(user._id); 
+    await deleteUserSessionsForUser(user._id);
 
     res.status(200).json({
       status: 200,

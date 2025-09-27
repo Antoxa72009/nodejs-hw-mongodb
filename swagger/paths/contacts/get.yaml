@@ -1,0 +1,35 @@
+get:
+  tags:
+    - Contacts
+  summary: Отримати список контактів
+  operationId: getContacts
+  description: >
+    Повертає список контактів. Можна використовувати параметри для фільтрації та пагінації.
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      description: Номер сторінки
+      required: false
+      schema:
+        type: integer
+        example: 1
+    - name: limit
+      in: query
+      description: Кількість елементів на сторінці
+      required: false
+      schema:
+        type: integer
+        example: 10
+    - name: name
+      in: query
+      description: Фільтр по імені
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Список контактів
+    '401':
+      description: Неавторизований

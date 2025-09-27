@@ -1,0 +1,286 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Contacts API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "Це API для роботи з контактами: створення, оновлення, видалення та отримання списку.\n"
+  },
+  "servers": [
+    {
+      "url": "https://nodejs-hw-mongodb-79wc.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Contacts",
+      "description": "Операції з контактами"
+    },
+    {
+      "name": "Auth",
+      "description": "Реєстрація та логін"
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "get": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Отримати список контактів",
+          "operationId": "getContacts",
+          "description": "Повертає список контактів. Можна використовувати параметри для фільтрації та пагінації.\n",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "page",
+              "in": "query",
+              "description": "Номер сторінки",
+              "required": false,
+              "schema": {
+                "type": "integer",
+                "example": 1
+              }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "Кількість елементів на сторінці",
+              "required": false,
+              "schema": {
+                "type": "integer",
+                "example": 10
+              }
+            },
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Фільтр по імені",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Список контактів"
+            },
+            "401": {
+              "description": "Неавторизований"
+            }
+          }
+        }
+      },
+      "post": {
+        "post": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Створити новий контакт",
+          "operationId": "createContact",
+          "description": "Створює нового контакта. Поле **photo** можна передати як файл.\n",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Anton"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "anton@example.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "+380123456789"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Контакт створений"
+            },
+            "400": {
+              "description": "Невірні дані"
+            },
+            "401": {
+              "description": "Неавторизований"
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{contactId}": {
+      "get": {
+        "get": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Отримати контакт за ID",
+          "operationId": "getContactById",
+          "description": "Повертає інформацію про контакт за його унікальним ID.\n",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Контакт знайдено"
+            },
+            "401": {
+              "description": "Неавторизований"
+            },
+            "404": {
+              "description": "Контакт не знайдено"
+            }
+          }
+        }
+      },
+      "patch": {
+        "patch": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Оновити контакт",
+          "operationId": "updateContact",
+          "description": "Оновлює дані існуючого контакта. Можна завантажити нове фото.\n",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Контакт оновлений"
+            },
+            "400": {
+              "description": "Невірні дані"
+            },
+            "401": {
+              "description": "Неавторизований"
+            },
+            "404": {
+              "description": "Контакт не знайдено"
+            }
+          }
+        }
+      },
+      "delete": {
+        "delete": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Видалити контакт",
+          "operationId": "deleteContact",
+          "description": "Видаляє контакт за його унікальним ID.\n",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "contactId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Контакт видалений"
+            },
+            "401": {
+              "description": "Неавторизований"
+            },
+            "404": {
+              "description": "Контакт не знайдено"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

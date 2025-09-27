@@ -1,0 +1,35 @@
+post:
+  tags:
+    - Contacts
+  summary: Створити новий контакт
+  operationId: createContact
+  description: >
+    Створює нового контакта. Поле **photo** можна передати як файл.
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: 'Anton'
+            email:
+              type: string
+              example: 'anton@example.com'
+            phone:
+              type: string
+              example: '+380123456789'
+            photo:
+              type: string
+              format: binary
+  responses:
+    '201':
+      description: Контакт створений
+    '400':
+      description: Невірні дані
+    '401':
+      description: Неавторизований

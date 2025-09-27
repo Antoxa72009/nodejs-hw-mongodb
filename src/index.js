@@ -8,6 +8,9 @@ import contactsRouter from "./routers/contacts.js";
 import { notFoundHandler, errorHandler } from "./middlewares/errorHandler.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routers/auth.js";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
+import path from "path";
 
 const bootstrap = async () => {
   await initMongoConnection();
@@ -16,6 +19,10 @@ const bootstrap = async () => {
 
   app.use(cors());
   app.use(express.json());
+
+  const swaggerFile = path.join(process.cwd(), "docs", "swagger.json");
+  const swaggerData = JSON.parse(fs.readFileSync(swaggerFile, "utf8"));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerData));
 
   app.use(cookieParser(process.env.COOKIE_SECRET));
 

@@ -6,13 +6,14 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: >
-    Це API для роботи з контактами: створення, оновлення, видалення та отримання списку.
+    API для роботи з контактами: створення, оновлення, видалення та отримання списку.
 tags:
   - name: Contacts
     description: Операції з контактами
   - name: Auth
     description: Реєстрація та логін
 servers:
+  - url: http://localhost:3000
   - url: https://nodejs-hw-mongodb-79wc.onrender.com
 paths:
   /contacts:

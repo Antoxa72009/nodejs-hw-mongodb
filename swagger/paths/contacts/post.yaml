@@ -21,6 +21,9 @@ post:
             phoneNumber:
               type: string
               example: +380501234567
+            isFavourite:
+              type: boolean
+              example: false
             contactType:
               type: string
               example: personal

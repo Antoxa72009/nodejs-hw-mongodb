@@ -2,33 +2,31 @@ type: object
 properties:
   _id:
     type: string
-    example: 68e128e40633e4c841a37c46
+    example: '68e12b2d2bf0669da2e69ae8'
   name:
     type: string
-    example: John Doe
-  email:
-    type: string
-    example: johndoe@example.com
+    example: 'John Doe'
   phoneNumber:
     type: string
-    example: +380501234567
+    example: '+380501234567'
+  email:
+    type: string
+    example: 'johndoe@example.com'
   isFavourite:
     type: boolean
     example: false
   contactType:
     type: string
-    example: personal
+    example: 'personal'
   userId:
     type: string
-    example: 68e123fb2c08649de2af5735
+    example: '68e123fb2c08649de2af5735'
   photo:
     type: string
-    example: https://res.cloudinary.com/dw3mqhimt/image/upload/v1759586532/contacts/hu2cnb6skxkp9bhmidxi.png
+    example: 'https://res.cloudinary.com/dw3mqhimt/image/upload/v1759587117/contacts/zopbmeufn0opw2dpj0zi.png'
   createdAt:
     type: string
-    format: date-time
-    example: 2025-10-04T14:02:12.823Z
+    example: '2025-10-04T14:11:57.798Z'
   updatedAt:
     type: string
-    format: date-time
-    example: 2025-10-04T14:02:12.823Z
+    example: '2025-10-04T14:11:57.798Z'

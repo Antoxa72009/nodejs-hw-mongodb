@@ -28,6 +28,9 @@ patch:
             phoneNumber:
               type: string
               example: +380501234567
+            isFavourite:
+              type: boolean
+              example: true
             contactType:
               type: string
               example: personal

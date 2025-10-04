@@ -65,9 +65,9 @@
             "name": "sortBy",
             "description": "Поле для сортування (наприклад: name, email, phone)",
             "schema": {
-              "type": "string",
-              "example": "name"
-            }
+              "type": "string"
+            },
+            "example": "name"
           },
           {
             "in": "query",
@@ -160,6 +160,11 @@
           "tags": [
             "Contacts"
           ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "requestBody": {
             "required": true,
             "content": {
@@ -175,13 +180,13 @@
                       "type": "string",
                       "example": "johndoe@example.com"
                     },
-                    "phone": {
+                    "phoneNumber": {
                       "type": "string",
                       "example": 380501234567
                     },
-                    "favorite": {
-                      "type": "boolean",
-                      "example": false
+                    "contactType": {
+                      "type": "string",
+                      "example": "personal"
                     },
                     "photo": {
                       "type": "string",
@@ -206,7 +211,7 @@
                       },
                       "message": {
                         "type": "string",
-                        "example": "Successfully created contact!"
+                        "example": "Successfully created a contact!"
                       },
                       "data": {
                         "$ref": "../../../components/schemas/contact.yaml"
@@ -230,6 +235,11 @@
           "description": "Отримати інформацію про контакт за його ID",
           "tags": [
             "Contacts"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
           ],
           "parameters": [
             {
@@ -282,6 +292,11 @@
           "tags": [
             "Contacts"
           ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "parameters": [
             {
               "in": "path",
@@ -308,13 +323,13 @@
                       "type": "string",
                       "example": "johndoe@example.com"
                     },
-                    "phone": {
+                    "phoneNumber": {
                       "type": "string",
                       "example": 380501234567
                     },
-                    "favorite": {
-                      "type": "boolean",
-                      "example": true
+                    "contactType": {
+                      "type": "string",
+                      "example": "personal"
                     },
                     "photo": {
                       "type": "string",
@@ -364,6 +379,11 @@
           "description": "Видалити контакт за його ID",
           "tags": [
             "Contacts"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
           ],
           "parameters": [
             {
@@ -422,7 +442,7 @@
         "properties": {
           "_id": {
             "type": "string",
-            "example": "68d1098897afdd77aa9b1234"
+            "example": "68e128e40633e4c841a37c46"
           },
           "name": {
             "type": "string",
@@ -432,17 +452,35 @@
             "type": "string",
             "example": "johndoe@example.com"
           },
-          "phone": {
+          "phoneNumber": {
             "type": "string",
             "example": 380501234567
           },
-          "favorite": {
+          "isFavourite": {
             "type": "boolean",
-            "example": true
+            "example": false
           },
-          "owner": {
+          "contactType": {
             "type": "string",
-            "example": "68d1098897afdd77aa9b5678"
+            "example": "personal"
+          },
+          "userId": {
+            "type": "string",
+            "example": "68e123fb2c08649de2af5735"
+          },
+          "photo": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dw3mqhimt/image/upload/v1759586532/contacts/hu2cnb6skxkp9bhmidxi.png"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-10-04T14:02:12.823Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-10-04T14:02:12.823Z"
           }
         }
       }

@@ -12,21 +12,18 @@ parameters:
     schema:
       type: integer
     example: 1
-
   - in: query
     name: perPage
     description: 'Кількість контактів на сторінці'
     schema:
       type: integer
     example: 10
-
   - in: query
     name: sortBy
     description: 'Поле для сортування (наприклад: name, email, phone)'
     schema:
       type: string
-      example: name
-
+    example: name
   - in: query
     name: sortOrder
     description: 'Порядок сортування'
@@ -34,14 +31,12 @@ parameters:
       type: string
       enum: [asc, desc]
     example: asc
-
   - in: query
     name: filter
     description: 'Пошук за частиною імені або email'
     schema:
       type: string
     example: test
-
 responses:
   '200':
     description: Список контактів успішно отримано!

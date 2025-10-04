@@ -3,6 +3,8 @@ patch:
   description: Оновити інформацію про контакт за його ID
   tags:
     - Contacts
+  security:
+    - bearerAuth: []
   parameters:
     - in: path
       name: contactId
@@ -26,9 +28,9 @@ patch:
             phoneNumber:
               type: string
               example: +380501234567
-            favorite:
-              type: boolean
-              example: true
+            contactType:
+              type: string
+              example: personal
             photo:
               type: string
               format: binary

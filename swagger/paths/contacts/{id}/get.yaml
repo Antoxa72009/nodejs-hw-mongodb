@@ -3,6 +3,8 @@ get:
   description: Отримати інформацію про контакт за його ID
   tags:
     - Contacts
+  security:
+    - bearerAuth: []
   parameters:
     - in: path
       name: contactId

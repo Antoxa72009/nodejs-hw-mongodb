@@ -8,12 +8,14 @@ security:
 parameters:
   - in: query
     name: page
+    description: 'Номер сторінки (для пагінації)'
     schema:
       type: integer
     example: 1
 
   - in: query
-    name: limit
+    name: perPage
+    description: 'Кількість контактів на сторінці'
     schema:
       type: integer
     example: 10
@@ -27,11 +29,19 @@ parameters:
 
   - in: query
     name: sortOrder
-    description: Порядок сортування
+    description: 'Порядок сортування'
     schema:
       type: string
       enum: [asc, desc]
     example: asc
+
+  - in: query
+    name: filter
+    description: 'Пошук за частиною імені або email'
+    schema:
+      type: string
+    example: test
+
 responses:
   '200':
     description: Список контактів успішно отримано!
@@ -39,10 +49,6 @@ responses:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
             status:
               type: integer
@@ -52,30 +58,22 @@ responses:
               example: Successfully found contacts!
             data:
               type: object
-              required:
-                - data
-                - page
-                - perPage
-                - totalItems
-                - totalPages
-                - hasNextPage
-                - hasPreviousPage
               properties:
                 data:
                   type: array
                   items:
                     $ref: '../../components/schemas/contact.yaml'
                 page:
-                  type: number
+                  type: integer
                   example: 1
                 perPage:
-                  type: number
+                  type: integer
                   example: 10
                 totalItems:
-                  type: number
+                  type: integer
                   example: 35
                 totalPages:
-                  type: number
+                  type: integer
                   example: 4
                 hasNextPage:
                   type: boolean

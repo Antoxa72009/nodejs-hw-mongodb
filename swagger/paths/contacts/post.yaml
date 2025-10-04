@@ -1,52 +1,45 @@
-tags:
-  - Contacts
-summary: Create new contact
-operationId: createContact
-description: 'Створити новий контакт'
-security:
-  - bearerAuth: []
-requestBody:
-  required: true
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - name
-          - email
-          - phone
-        properties:
-          name:
-            type: string
-            example: 'John Doe'
-          email:
-            type: string
-            example: 'johndoe@example.com'
-          phone:
-            type: string
-            example: '+380501234567'
-          favorite:
-            type: boolean
-            example: false
-responses:
-  '201':
-    description: Контакт успішно створено
+post:
+  summary: Create new contact
+  description: Створити новий контакт
+  tags:
+    - Contacts
+  requestBody:
+    required: true
     content:
-      application/json:
+      multipart/form-data:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
-            status:
-              type: integer
-              example: 201
-            message:
+            name:
               type: string
-              example: Successfully created contact!
-            data:
-              $ref: '../../components/schemas/contact.yaml'
-  '401':
-    $ref: '../../components/responses/401.yaml'
+              example: John Doe
+            email:
+              type: string
+              example: johndoe@example.com
+            phone:
+              type: string
+              example: +380501234567
+            favorite:
+              type: boolean
+              example: false
+            photo:
+              type: string
+              format: binary
+  responses:
+    '201':
+      description: Контакт успішно створено
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 201
+              message:
+                type: string
+                example: Successfully created contact!
+              data:
+                $ref: '../../../components/schemas/contact.yaml'
+    '401':
+      $ref: '../../../components/responses/401.yaml'

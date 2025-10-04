@@ -1,4 +1,4 @@
-description: Unauthorized error
+description: Resource not found
 content:
   application/json:
     schema:
@@ -6,13 +6,13 @@ content:
       properties:
         status:
           type: integer
-          example: 401
+          example: 404
         message:
           type: string
-          example: UnauthorizedError
+          example: Contact not found
         data:
           type: object
           properties:
             message:
               type: string
-              example: Access token expired
+              example: No contact with this ID

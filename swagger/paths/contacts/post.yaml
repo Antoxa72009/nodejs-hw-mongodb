@@ -16,7 +16,7 @@ post:
             email:
               type: string
               example: johndoe@example.com
-            phone:
+            phoneNumber:
               type: string
               example: +380501234567
             favorite:

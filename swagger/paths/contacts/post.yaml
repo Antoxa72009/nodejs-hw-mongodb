@@ -1,8 +1,8 @@
 post:
-  summary: Create new contact
-  description: Створити новий контакт
   tags:
     - Contacts
+  summary: Create new contact
+  description: Створити новий контакт
   security:
     - bearerAuth: []
   requestBody:

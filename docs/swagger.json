@@ -30,136 +30,138 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
-        "summary": "Get list of contacts",
-        "operationId": "getContacts",
-        "description": "Отримати список усіх контактів з пагінацією та фільтрами",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "page",
-            "description": "Номер сторінки (для пагінації)",
-            "schema": {
-              "type": "integer"
+        "get": {
+          "tags": [
+            "Contacts"
+          ],
+          "summary": "Get list of contacts",
+          "operationId": "getContacts",
+          "description": "Отримати список усіх контактів з пагінацією та фільтрами",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "page",
+              "description": "Номер сторінки (для пагінації)",
+              "schema": {
+                "type": "integer"
+              },
+              "example": 1
             },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "description": "Кількість контактів на сторінці",
-            "schema": {
-              "type": "integer"
+            {
+              "in": "query",
+              "name": "perPage",
+              "description": "Кількість контактів на сторінці",
+              "schema": {
+                "type": "integer"
+              },
+              "example": 10
             },
-            "example": 10
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "description": "Поле для сортування (наприклад: name, email, phone)",
-            "schema": {
-              "type": "string"
+            {
+              "in": "query",
+              "name": "sortBy",
+              "description": "Поле для сортування (наприклад: name, email, phoneNumber)",
+              "schema": {
+                "type": "string"
+              },
+              "example": "name"
             },
-            "example": "name"
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "description": "Порядок сортування",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+            {
+              "in": "query",
+              "name": "sortOrder",
+              "description": "Порядок сортування",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              },
+              "example": "asc"
             },
-            "example": "asc"
-          },
-          {
-            "in": "query",
-            "name": "filter",
-            "description": "Пошук за частиною імені або email",
-            "schema": {
-              "type": "string"
-            },
-            "example": "test"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Список контактів успішно отримано!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found contacts!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/contact"
+            {
+              "in": "query",
+              "name": "filter",
+              "description": "Пошук за частиною імені або email",
+              "schema": {
+                "type": "string"
+              },
+              "example": "test"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Список контактів успішно отримано!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "example": 200
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Successfully found contacts!"
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "data": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "../../components/schemas/contact.yaml"
+                            }
+                          },
+                          "page": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "perPage": {
+                            "type": "integer",
+                            "example": 10
+                          },
+                          "totalItems": {
+                            "type": "integer",
+                            "example": 35
+                          },
+                          "totalPages": {
+                            "type": "integer",
+                            "example": 4
+                          },
+                          "hasNextPage": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "hasPreviousPage": {
+                            "type": "boolean",
+                            "example": false
                           }
-                        },
-                        "page": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "perPage": {
-                          "type": "integer",
-                          "example": 10
-                        },
-                        "totalItems": {
-                          "type": "integer",
-                          "example": 35
-                        },
-                        "totalPages": {
-                          "type": "integer",
-                          "example": 4
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": false
                         }
                       }
                     }
                   }
                 }
               }
+            },
+            "401": {
+              "$ref": "../../components/responses/401.yaml"
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       },
       "post": {
         "post": {
-          "summary": "Create new contact",
-          "description": "Створити новий контакт",
           "tags": [
             "Contacts"
           ],
+          "summary": "Create new contact",
+          "description": "Створити новий контакт",
           "security": [
             {
               "bearerAuth": []
@@ -235,11 +237,11 @@
     "/contacts/{contactId}": {
       "get": {
         "get": {
-          "summary": "Get contact by id",
-          "description": "Отримати інформацію про контакт за його ID",
           "tags": [
             "Contacts"
           ],
+          "summary": "Get contact by id",
+          "description": "Отримати інформацію про контакт за його ID",
           "security": [
             {
               "bearerAuth": []
@@ -291,11 +293,11 @@
       },
       "patch": {
         "patch": {
-          "summary": "Update contact by id",
-          "description": "Оновити інформацію про контакт за його ID",
           "tags": [
             "Contacts"
           ],
+          "summary": "Update contact by id",
+          "description": "Оновити інформацію про контакт за його ID",
           "security": [
             {
               "bearerAuth": []
@@ -383,11 +385,11 @@
       },
       "delete": {
         "delete": {
-          "summary": "Delete contact by id",
-          "description": "Видалити контакт за його ID",
           "tags": [
             "Contacts"
           ],
+          "summary": "Delete contact by id",
+          "description": "Видалити контакт за його ID",
           "security": [
             {
               "bearerAuth": []
@@ -442,84 +444,6 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
-      }
-    },
-    "schemas": {
-      "contact": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "example": "68e12b2d2bf0669da2e69ae8"
-          },
-          "name": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "phoneNumber": {
-            "type": "string",
-            "example": "+380501234567"
-          },
-          "email": {
-            "type": "string",
-            "example": "johndoe@example.com"
-          },
-          "isFavourite": {
-            "type": "boolean",
-            "example": false
-          },
-          "contactType": {
-            "type": "string",
-            "example": "personal"
-          },
-          "userId": {
-            "type": "string",
-            "example": "68e123fb2c08649de2af5735"
-          },
-          "photo": {
-            "type": "string",
-            "example": "https://res.cloudinary.com/dw3mqhimt/image/upload/v1759587117/contacts/zopbmeufn0opw2dpj0zi.png"
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2025-10-04T14:11:57.798Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2025-10-04T14:11:57.798Z"
-          }
-        }
-      }
-    },
-    "responses": {
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Access token expired"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

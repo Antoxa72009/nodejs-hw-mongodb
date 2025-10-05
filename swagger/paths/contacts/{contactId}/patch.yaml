@@ -1,8 +1,8 @@
 patch:
-  summary: Update contact by id
-  description: Оновити інформацію про контакт за його ID
   tags:
     - Contacts
+  summary: Update contact by id
+  description: Оновити інформацію про контакт за його ID
   security:
     - bearerAuth: []
   parameters:

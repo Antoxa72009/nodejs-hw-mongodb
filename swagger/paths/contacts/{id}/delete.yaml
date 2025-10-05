@@ -1,0 +1,31 @@
+tags:
+  - Contacts
+summary: Delete contact by id
+description: Видалити контакт за його ID
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    description: ID контакту, який потрібно видалити
+responses:
+  '200':
+    description: Контакт успішно видалено
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully deleted contact!
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

@@ -1,9 +1,16 @@
 tags:
   - Contacts
-summary: Create new contact
-description: Створити новий контакт
+summary: Update contact by id
+description: Оновити інформацію про контакт за його ID
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    description: ID контакту, який потрібно оновити
 requestBody:
   required: true
   content:
@@ -22,7 +29,7 @@ requestBody:
             example: +380501234567
           isFavourite:
             type: boolean
-            example: false
+            example: true
           contactType:
             type: string
             example: personal
@@ -30,8 +37,8 @@ requestBody:
             type: string
             format: binary
 responses:
-  '201':
-    description: Контакт успішно створено
+  '200':
+    description: Контакт успішно оновлено
     content:
       application/json:
         schema:
@@ -39,11 +46,13 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully updated contact!
             data:
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: '../../../components/schemas/contact.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

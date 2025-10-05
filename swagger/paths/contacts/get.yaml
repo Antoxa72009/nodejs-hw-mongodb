@@ -1,81 +1,80 @@
-get:
-  tags:
-    - Contacts
-  summary: Get list of contacts
-  operationId: getContacts
-  description: Отримати список усіх контактів з пагінацією та фільтрами
-  security:
-    - bearerAuth: []
-  parameters:
-    - in: query
-      name: page
-      description: 'Номер сторінки (для пагінації)'
-      schema:
-        type: integer
-      example: 1
-    - in: query
-      name: perPage
-      description: 'Кількість контактів на сторінці'
-      schema:
-        type: integer
-      example: 10
-    - in: query
-      name: sortBy
-      description: 'Поле для сортування (наприклад: name, email, phoneNumber)'
-      schema:
-        type: string
-      example: name
-    - in: query
-      name: sortOrder
-      description: 'Порядок сортування'
-      schema:
-        type: string
-        enum: [asc, desc]
-      example: asc
-    - in: query
-      name: filter
-      description: 'Пошук за частиною імені або email'
-      schema:
-        type: string
-      example: test
-  responses:
-    '200':
-      description: 'Список контактів успішно отримано!'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 200
-              message:
-                type: string
-                example: Successfully found contacts!
-              data:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '../../components/schemas/contact.yaml'
-                  page:
-                    type: integer
-                    example: 1
-                  perPage:
-                    type: integer
-                    example: 10
-                  totalItems:
-                    type: integer
-                    example: 35
-                  totalPages:
-                    type: integer
-                    example: 4
-                  hasNextPage:
-                    type: boolean
-                    example: true
-                  hasPreviousPage:
-                    type: boolean
-                    example: false
-    '401':
-      $ref: '../../components/responses/401.yaml'
+tags:
+  - Contacts
+summary: Get list of contacts
+operationId: getContacts
+description: Отримати список усіх контактів з пагінацією та фільтрами
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    description: 'Номер сторінки (для пагінації)'
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: perPage
+    description: 'Кількість контактів на сторінці'
+    schema:
+      type: integer
+    example: 10
+  - in: query
+    name: sortBy
+    description: 'Поле для сортування (наприклад: name, email, phoneNumber)'
+    schema:
+      type: string
+    example: name
+  - in: query
+    name: sortOrder
+    description: 'Порядок сортування'
+    schema:
+      type: string
+      enum: [asc, desc]
+    example: asc
+  - in: query
+    name: filter
+    description: 'Пошук за частиною імені або email'
+    schema:
+      type: string
+    example: test
+responses:
+  '200':
+    description: 'Список контактів успішно отримано!'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contacts!
+            data:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/contact.yaml'
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 10
+                totalItems:
+                  type: integer
+                  example: 35
+                totalPages:
+                  type: integer
+                  example: 4
+                hasNextPage:
+                  type: boolean
+                  example: true
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+  '401':
+    $ref: '../../components/responses/401.yaml'

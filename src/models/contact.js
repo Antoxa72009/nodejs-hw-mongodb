@@ -8,12 +8,16 @@ const contactSchema = new Schema(
     isFavourite: { type: Boolean, default: false },
     contactType: {
       type: String,
-      enum: ['work', 'home', 'personal'],
-      default: 'personal',
-      required: true,
+      enum: ["work", "home", "personal"],
+      default: "personal",
     },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    photo: { type: String, default: null }, 
   },
-  { timestamps: true }
+  {
+    versionKey: false,
+    timestamps: true,
+  }
 );
 
 export const Contact = model('Contact', contactSchema);
